@@ -2,6 +2,7 @@ const express = require('express');
 const router = new express.Router();
 
 const Product = require('../models/productModel');
+
 // create the prodct
 router.post('/', async (req, res) => {
     try {
@@ -9,6 +10,7 @@ router.post('/', async (req, res) => {
         await newProduct.save()
         res.status(201).send(newProduct)
     } catch (error) {
+        console.log(error)
         res.status(400).send({ message: error })
     }
 })
@@ -16,7 +18,7 @@ router.post('/', async (req, res) => {
 // fetch a product
 router.get('/:id', async (req, res) => {
     try {
-        const product = await Product.findOne({ _id: req.params.id })
+        const product = await Product.findOne({ id: req.params.id })
         if (!product) {
             res.status(404).send({ error: "Item not found" })
         }
