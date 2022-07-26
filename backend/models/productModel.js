@@ -29,5 +29,7 @@ const reviewSchema = new mongoose.Schema(
 );
 
 const Product = model('Product', productSchema);
+const Review = model('Model',reviewSchema);
 
 module.exports = Product;
+module.exports = Review;
