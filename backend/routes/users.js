@@ -12,9 +12,16 @@ router.get("/", async (req, res, next) => {
   return res.status(200).json(users);
 });
 
+// Delete all users
+router.delete("/delete/all", async (req, res, next) => {
+  await User.deleteMany({});
+
+  return res.status(200).send("Deleted all users");
+});
+
 // Profile
 router.get("/profile", isAuth, async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findOne({ email: req.user.email });
 
   if (!user) return next(createError(404, "User id not found"));
 
@@ -28,7 +35,6 @@ router.delete("/delete", isAuth, async (req, res, next) => {
 
   if (!user) return next(createError(404, "User not found"));
 
-  delete user.password;
   return res.status(200).send(user);
 });
 
