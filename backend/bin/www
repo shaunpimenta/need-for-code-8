@@ -15,6 +15,11 @@ const { connectToDB } = require("../lib/db");
 require("dotenv").config()
 
 /**
+ * Conncet to Database
+ */
+connectToDB()
+
+/**
  * Get port from environment and store in Express.
  */
 
