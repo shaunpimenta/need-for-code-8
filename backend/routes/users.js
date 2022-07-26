@@ -1,6 +1,7 @@
 const express = require('express');
-const User = require("../models/userModel")
-const { isAuth } = require("../lib/auth")
+const createError = require('http-errors');
+const User = require("../models/userModel");
+const { isAuth, generateAccessToken, generateRefreshToken } = require("../lib/auth")
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // Profile
-router.get("/profile", isAuth, (req, res, next) => {
+router.get("/profile", isAuth, async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
   if (!user) return next(createError(404, "User id not found"));
@@ -22,7 +23,7 @@ router.get("/profile", isAuth, (req, res, next) => {
 });
 
 // Delete user
-router.delete("/delete", isAuth, (req, res, next) => {
+router.delete("/delete", isAuth, async (req, res, next) => {
   const user = await User.findOneAndDelete({ email: req.user.email });
 
   if (!user) return next(createError(404, "User not found"));
@@ -32,7 +33,7 @@ router.delete("/delete", isAuth, (req, res, next) => {
 });
 
 // Sign up
-router.post("/signup", (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (user) return next(createError(409, "User already exists"));
 
@@ -64,7 +65,7 @@ router.post("/signup", (req, res, next) => {
 });
 
 // Sign in
-router.post("/signin", (req, res, next) => {
+router.post("/signin", async (req, res, next) => {
   // Check if password is passed in request
   if (!req.body.password)
     return next(createError(400, "User Credentials not provided"));
@@ -102,7 +103,7 @@ router.post("/signin", (req, res, next) => {
 );
 
 // Sign out
-router.get("/signout", isAuth, (req, res, next) => {
+router.get("/signout", isAuth, async (req, res, next) => {
   const user = await User.findOneAndUpdate(
     { email: req.user.email },
     { $unset: { refreshToken: "" } }
@@ -114,7 +115,7 @@ router.get("/signout", isAuth, (req, res, next) => {
 });
 
 // Get new access token
-router.post("/token", (req, res, next) => {
+router.post("/token", async (req, res, next) => {
   const refreshToken = req.body.refreshToken;
 
   if (!refreshToken || !req.body.email)
