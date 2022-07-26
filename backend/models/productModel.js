@@ -1,5 +1,16 @@
 const { Schema, model } = require('mongoose')
 
+const reviewSchema = new Schema(
+    {
+        name: { type: String, required: true },
+        rating: { type: Number, default: 0 },
+        comment: { type: String, required: true },
+    },
+    {
+        timestamps: true,
+    }
+);
+
 const productSchema = new Schema(
     {
         name: { type: String, required: true },
@@ -17,19 +28,6 @@ const productSchema = new Schema(
     { timestamps: true }
 )
 
-const reviewSchema = new mongoose.Schema(
-    {
-        name: { type: String, required: true },
-        rating: { type: Number, default: 0 },
-        comment: { type: String, required: true },
-    },
-    {
-        timestamps: true,
-    }
-);
-
 const Product = model('Product', productSchema);
-const Review = model('Model',reviewSchema);
 
 module.exports = Product;
-module.exports = Review;
