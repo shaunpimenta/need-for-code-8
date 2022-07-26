@@ -10,7 +10,7 @@ services:
       NODE_ENV: development
       MONGO_URI: mongodb://mongodb:27017/e-commerce
     ports:
-      - 3000:3000
+      - 5000:3000
     volumes:
       - .:/usr/src/app
     command: [ "npm", "run", "dev" ]
