@@ -7,7 +7,8 @@ const refreshTokenSecret =
 
 // Create jwt access token
 function generateAccessToken(data, expiresIn = "30m") {
-    return jwt.sign(data, accessTokenSecret, { expiresIn });
+    // return jwt.sign(data, accessTokenSecret, { expiresIn });
+    return jwt.sign(data, accessTokenSecret);
 }
 
 // Verify jwt access token
