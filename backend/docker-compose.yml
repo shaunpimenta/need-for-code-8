@@ -1,0 +1,28 @@
+version: "3.4"
+
+services:
+  ecommerceapi:
+    image: ecommerceapi
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+      MONGO_URI: mongodb://mongodb:27017/e-commerce
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+    command: [ "npm", "run", "dev" ]
+    links:
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data/db
+    command: mongod --quiet --logpath /dev/null
+
+volumes:
+  data:
