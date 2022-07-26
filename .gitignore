@@ -1,0 +1,42 @@
+secrets.txt
+
+# ===
+# Frontend
+# ===
+
+# dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
+
+# testing
+frontend/coverage
+
+# next.js
+frontend/.next/
+frontend/out/
+
+# production
+frontend/build
+
+# misc
+frontend/.DS_Store
+frontend/*.pem
+
+# debug
+frontend/pm-debug.log*
+frontend/arn-debug.log*
+frontend/arn-error.log*
+frontend/pnpm-debug.log*
+
+# local env files
+frontend/.env*.local
+
+# vercel
+frontend/.vercel
+
+# ===
+# Backend
+# ===
+
+backend/node_modules
